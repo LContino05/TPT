@@ -3,6 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int verif_alf(LIST ALFA, char Caract){
+	LIST aux=ALFA;
+	while(aux!=NULL){
+		if(string_equal(aux.date, Caract)!=1)
+			aux=aux->sig;
+	}
+	if(aux!=NULL)
+		return 0;
+	else
+		return 1;
+}
 
 void CargaLista(Transiciones *head, Transiciones new_node) {
 	Transiciones temp;
@@ -30,9 +41,11 @@ Transiciones CargaListaTransiciones(LIST Estados, LIST alfabeto){
 		printf("\nEstado de origen: ");
 		nodo->dato.Estado_Origen=load();
 		fflush(stdin);
-		printf("\nEtiqueta: ");
-		scanf("%c", &nodo->dato.Etiqueta);
-		fflush(stdin);
+		do{
+			printf("\nEtiqueta: ");
+			scanf("%c", &nodo->dato.Etiqueta);
+			fflush(stdin);
+		}while(verif_alf(alfabeto, nodo->dato.Etiqueta)==1);
 		printf("\nEstado destino: ");
 		nodo->dato.Estado_Destino=load();
 		CargaLista(&nvo, nodo);
