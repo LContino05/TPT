@@ -10,6 +10,5 @@ typedef struct{
 
 TAutomata CargaAutomata();
 void MostrarAutomata(TAutomata a);
-int LeerCadena(STR Cadena, TAutomata A);
-int verif_alf(LIST, LIST); 
+int LeerCadena(STR Cadena, TAutomata A); 
 #endif
