@@ -32,8 +32,20 @@ Transiciones CreaNodo(){
     return Nodo;
 }
 
-void carga_AND(LIST LisEst){
+void cargaest_AND(LIST*LisEst){
 	LIST aux;
+	int op;
+	do{
+		if((*LisEst)==NULL)
+			(*LisEst)=load();
+		else{
+			aux=(*LisEst);
+			while(aux!=NULL)
+				aux=aux->sig;
+			aux->dato.Estado_Destino=load();
+		}
+		printf("Cargar otro estado? [0]Si || [1]No");
+	}while(op!=1);
 }
 
 Transiciones CargaListaTransicionesND(LIST Estados, LIST alfabeto){
@@ -52,7 +64,8 @@ Transiciones CargaListaTransicionesND(LIST Estados, LIST alfabeto){
 			scanf("%c", &nodo->dato.Etiqueta);
 			fflush(stdin);
 		}while(verif_alf(alfabeto, nodo->dato.Etiqueta)==1);
-		nodo->dato.Estado_Destino=carga_AND(tsc);
+		cargaest_AND(tsc);
+		nodo->dato.Estado_Destino= tsc->date;
 		CargaLista(&nvo, nodo);
 		printf("\nCargar transiciones? 1:si 2:no :");scanf("%d", &opc);
 	}
