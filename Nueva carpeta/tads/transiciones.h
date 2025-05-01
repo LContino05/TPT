@@ -17,6 +17,7 @@ typedef struct nodo3{
 typedef Delta* Transiciones;
 
 Transiciones CargaListaTransiciones(LIST, LIST);
+Transiciones CargaListaTransicionesND(LIST, LIST);
 void mostrar_lista_transiciones(Transiciones t);
 STR transicion(STR Estado, char caracter, Transiciones delta);
 #endif
