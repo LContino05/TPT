@@ -31,7 +31,7 @@ TAutomata CargaAutomata(){
 	if(Op==0)
 		nvo.Transiciones=CargaListaTransiciones(nvo.Estados, nvo.Alfabeto);
 	else
-		nvo.Transiciones= ;
+		nvo.Transiciones=CargaListaTransicionesND(nvo.Estados, nvo.Alfabeto);
 	
 	return nvo;
 	
