@@ -1,7 +1,19 @@
 #include "AUTOMATA.h"
 #include <stdio.h>
+
+int DetOrnoDet(){
+	int opc;
+	do{
+		printf("El automata es...");
+		printf("[0]Determinista || [1]No determinista");
+	}while(opc==1 || opc==0);
+	return opc;
+}
+
 TAutomata CargaAutomata(){
 	TAutomata nvo;
+	int Op;
+	Op=DetOrnoDet();
 	
 	printf("\nEstados");
 	nvo.Estados=load_list();
@@ -16,7 +28,10 @@ TAutomata CargaAutomata(){
 	nvo.Estado_Inicial=load();
 	
 	printf("\nTransiciones: ");
-	nvo.Transiciones=CargaListaTransiciones(nvo.Estados, nvo.Alfabeto);
+	if(Op==0)
+		nvo.Transiciones=CargaListaTransiciones(nvo.Estados, nvo.Alfabeto);
+	else
+		nvo.Transiciones= ;
 	
 	return nvo;
 	
@@ -36,7 +51,7 @@ void MostrarAutomata(TAutomata a) {
 		printf("\nq0 (Estado inicial): ");
 		print(a.Estado_Inicial);
 		
-		printf("\nF (Estados de aceptación): ");
+		printf("\nF (Estados de aceptaciÃ³n): ");
 		print_list(a.Estados_Aceptacion);
 		
 		printf("\nd (Transiciones):\n");
