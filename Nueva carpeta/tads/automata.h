@@ -3,12 +3,14 @@
 #include "TRANSICIONES.h"
 
 typedef struct{
-	LIST Estados,Estados_Aceptacion,Alfabeto;
-	STR Estado_Inicial;
+	SET Estado_Inicial,Estados_Aceptacion,Estados,Alfabeto;
 	Transiciones Transiciones;
 }TAutomata;
 
+
+int Tipo_de_Automata(Transiciones L);
+TAutomata CargaAutomataconCadena(STR A);
 TAutomata CargaAutomata();
 void MostrarAutomata(TAutomata a);
-int LeerCadena(STR Cadena, TAutomata A); 
+int LeerCadena(STR Cadena, TAutomata A);
 #endif

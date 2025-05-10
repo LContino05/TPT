@@ -1,6 +1,6 @@
 #ifndef TAD_SET_H
 #define TAD_SET_H
-#include "tad_string.h"
+#include "str.h"
 
 /*Mathematic model*/
 
@@ -14,7 +14,9 @@ typedef T_SET_NODE* SET;
 /*Mathematic model*/
 
 /*Operations*/
-
+int Cantidad_Elementos(SET Lis);
+SET clone_set(SET head);
+SET create_node_set_2(STR string);
 SET create_set();
 void add_element_to_set(SET *, STR); /*SET es por referencia, internamente*/
 void show_set(SET);

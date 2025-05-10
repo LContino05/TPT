@@ -15,7 +15,15 @@ void remove_duplicates(SET *);
 /*Private prototipes*/
 
 /*Private functions*/
-
+int Cantidad_Elementos(SET Lis){
+	int B=0;
+	SET aux=Lis;
+	while(aux!=NULL){
+		B++;
+		aux=aux->next;
+	}
+	return B;
+}
 SET create_node_set() {
     SET node;
     node=(SET)malloc(sizeof(T_SET_NODE));
@@ -63,7 +71,7 @@ SET clone_set(SET head) {
 
 SET create_set() {
     SET new=NULL, node_a, node_b;
-    int n, i, c;
+    int n, i;
     i=0;
     printf("Enter the cardinal of set: ");
     scanf("%d", &n);
@@ -134,31 +142,6 @@ SET str_to_set(STR string, char token) {
 
     return(new_string);
 }
-
-/*SET str_to_set (STR head ,char character){
-    SET new_set;
-    STR new_string=NULL,node=NULL, temp;
-    SET new_set=NULL, node_set=NULL;
-    while (temp!=NULL){
-        if(returnLetra(temp)!=character){
-            node=create();
-            node->date=returnLetra(temp);
-            cargar(&new_string,node);
-        }else{
-            node_set=inicializar();
-            node_set->date=new_string;
-            cargarset(&new_set,node_set);
-            new_string=NULL;
-        }temp=temp->next;
-    }
-	
-	if (new_string != NULL) {
-		node_set = inicializar();
-		node_set->date = new_string;
-		cargarset(&new_set, node_set);
-	}
-    return(new_set);
-}*/
 
 SET union_set(SET head_a, SET head_b) {
     SET new_set=NULL, temp;

@@ -2,9 +2,11 @@
 #define TRANSICIONES_H
 #include "STR.h"
 #include "LIST.h"
+#include "tad_set.h"
 
 typedef struct{
-	STR Estado_Origen, Estado_Destino;
+	STR Estado_Origen;
+	SET Estado_Destino;
 	char Etiqueta;
 }TTransicion;
 
@@ -16,8 +18,10 @@ typedef struct nodo3{
 
 typedef Delta* Transiciones;
 
-Transiciones CargaListaTransiciones(LIST, LIST);
-Transiciones CargaListaTransicionesND(LIST, LIST);
+void CargaLista(Transiciones *head, Transiciones new_node);
+Transiciones CreaNodoTransicion();
+Transiciones CargaListaTransiciones();
 void mostrar_lista_transiciones(Transiciones t);
-STR transicion(STR Estado, char caracter, Transiciones delta);
+SET transicion(SET a,Transiciones b,char c);
+
 #endif
