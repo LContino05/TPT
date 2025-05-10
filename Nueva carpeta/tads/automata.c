@@ -3,19 +3,19 @@
 #include "STR.h"
 #include <stdio.h>
 
-/* Funci髇 para cargar cada parte del aut髆ata en orden seg鷑 el par醡etro opc. 
-Esto configura los estados, alfabeto, estado inicial y estados de aceptaci髇 del aut髆ata. */
+/* Funci贸n para cargar cada parte del aut贸mata en orden seg煤n el par谩metro opc. 
+Esto configura los estados, alfabeto, estado inicial y estados de aceptaci贸n del aut贸mata. */
 void CargaAutomata2(int opc, SET date, TAutomata *nvo) {
 	switch(opc) {
 	case 0: nvo->Estados = date; break; // Cargar los estados
 	case 1: nvo->Alfabeto = date; break; // Cargar el alfabeto
 	case 2: nvo->Estado_Inicial = date; break; // Cargar el estado inicial
-	case 3: nvo->Estados_Aceptacion = date; break; // Cargar los estados de aceptaci髇
+	case 3: nvo->Estados_Aceptacion = date; break; // Cargar los estados de aceptaci贸n
 	}
 }
 
-/* Funci髇 para cargar el aut髆ata a partir de una cadena (STR A). 
-Se descompone la cadena e inserta las transiciones y los diferentes conjuntos en el aut髆ata. */
+/* Funci贸n para cargar el aut贸mata a partir de una cadena (STR A). 
+Se descompone la cadena e inserta las transiciones y los diferentes conjuntos en el aut贸mata. */
 TAutomata CargaAutomataconCadena(STR A) {
 	TAutomata nvo;
 	Transiciones nvo_transicion = NULL, nodo_transicion;
@@ -27,10 +27,10 @@ TAutomata CargaAutomataconCadena(STR A) {
 	while (aux != NULL) {
 		caracter = get_char(aux);
 		
-		if (caracter == '{') {  // Se detecta una transici髇 (bloque de transiciones)
-			aux2 = aux->next;  // Avanzar al siguiente car醕ter (omitimos el '{')
+		if (caracter == '{') {  // Se detecta una transici贸n (bloque de transiciones)
+			aux2 = aux->next;  // Avanzar al siguiente car谩cter (omitimos el '{')
 			
-			// Leer el estado de origen de la transici髇
+			// Leer el estado de origen de la transici贸n
 			while (aux2 != NULL && (caracter = get_char(aux2)) != ',') {
 				nodo = create_node(caracter); // Crear nodo para el estado
 				enqueue(&estado1, nodo);  // Encolar el nodo al conjunto de estados de origen
@@ -38,10 +38,10 @@ TAutomata CargaAutomataconCadena(STR A) {
 			}
 			
 			aux2 = aux2->next;
-			etiqueta = get_char(aux2); // Leer la etiqueta de la transici髇
+			etiqueta = get_char(aux2); // Leer la etiqueta de la transici贸n
 			
 			aux2 = aux2->next;
-			// Leer el estado de destino de la transici髇
+			// Leer el estado de destino de la transici贸n
 			while (aux2 != NULL && (caracter = get_char(aux2)) != '}') {
 				nodo = create_node(caracter);  // Crear nodo para el estado de destino
 				enqueue(&estado2, nodo);  // Encolar el nodo al conjunto de estados de destino
@@ -50,19 +50,19 @@ TAutomata CargaAutomataconCadena(STR A) {
 			
 			estado_final = str_to_set(estado2, ',');  // Convertir la lista de estados de destino a un conjunto
 			
-			// Crear la transici髇
+			// Crear la transici贸n
 			nodo_transicion = CreaNodoTransicion();
 			nodo_transicion->dato.Estado_Origen = estado1;  // Asignar el estado de origen
 			nodo_transicion->dato.Etiqueta = etiqueta;     // Asignar la etiqueta
 			nodo_transicion->dato.Estado_Destino = estado_final;  // Asignar el estado de destino
 			
-			CargaLista(&nvo_transicion, nodo_transicion);  // Insertar la transici髇 en la lista de transiciones
+			CargaLista(&nvo_transicion, nodo_transicion);  // Insertar la transici贸n en la lista de transiciones
 			
 			estado1 = NULL;
 			free_str(estado2);  // Liberar memoria del estado2 (ya que es una lista)
 			estado2 = NULL;
 			
-			aux = aux2;  // Avanzar hasta el final del bloque de transici髇
+			aux = aux2;  // Avanzar hasta el final del bloque de transici贸n
 		}
 		else if (caracter != '*') {
 			nodo = create_node(caracter);  // Crear nodo para los elementos fuera de las transiciones
@@ -70,23 +70,23 @@ TAutomata CargaAutomataconCadena(STR A) {
 		}
 		else {
 			date = str_to_set(nvo_str, ',');  // Convertir la lista de nodos a un conjunto
-			CargaAutomata2(b, date, &nvo);  // Cargar la parte correspondiente del aut髆ata
+			CargaAutomata2(b, date, &nvo);  // Cargar la parte correspondiente del aut贸mata
 			
 			free_str(nvo_str);  // Liberar memoria de la lista nvo_str
 			nvo_str = NULL;
 			
 			date = NULL;  // Liberar el conjunto de elementos
-			b++;  // Incrementar el contador para la siguiente parte del aut髆ata
+			b++;  // Incrementar el contador para la siguiente parte del aut贸mata
 		}
 		
-		aux = aux->next;  // Avanzar al siguiente car醕ter
+		aux = aux->next;  // Avanzar al siguiente car谩cter
 	}
 	
-	nvo.Transiciones = nvo_transicion;  // Asignar las transiciones al aut髆ata
-	return nvo;  // Retornar el aut髆ata cargado
+	nvo.Transiciones = nvo_transicion;  // Asignar las transiciones al aut贸mata
+	return nvo;  // Retornar el aut贸mata cargado
 }
 
-/* Funci髇 que verifica si el aut髆ata es determinista o no determinista. 
+/* Funci贸n que verifica si el aut贸mata es determinista o no determinista. 
 Devuelve 0 si es no determinista, 1 si es determinista. */
 int Tipo_de_Automata(Transiciones L) {
 	Transiciones aux1, aux2;
@@ -97,16 +97,16 @@ int Tipo_de_Automata(Transiciones L) {
 		aux2 = aux1->sig;  // Comparar con el resto de transiciones
 		
 		while (aux2 != NULL) {
-			// Si se encuentra una transici髇 con el mismo estado de origen y misma etiqueta
+			// Si se encuentra una transici贸n con el mismo estado de origen y misma etiqueta
 			if (string_equal(aux1->dato.Estado_Origen, aux2->dato.Estado_Origen) && 
 				aux1->dato.Etiqueta == aux2->dato.Etiqueta) {
-				return 0;  // El aut髆ata es no determinista
+				return 0;  // El aut贸mata es no determinista
 			}
 			else {
-				// Si el estado de destino tiene m醩 de un elemento (lo que indica no determinismo)
+				// Si el estado de destino tiene m谩s de un elemento (lo que indica no determinismo)
 				if (Cantidad_Elementos(aux1->dato.Estado_Destino) > 1 || 
 					Cantidad_Elementos(aux2->dato.Estado_Destino) > 1) {
-					return 0;  // El aut髆ata es no determinista
+					return 0;  // El aut贸mata es no determinista
 				}
 			}
 			
@@ -116,13 +116,14 @@ int Tipo_de_Automata(Transiciones L) {
 		aux1 = aux1->sig;  // Avanzar al siguiente nodo de la lista de transiciones
 	}
 	
-	return 1;  // El aut髆ata es determinista
+	return 1;  // El aut贸mata es determinista
 }
 
-/* Funci髇 para cargar un aut髆ata vac韔. 
-Permite ingresar los estados, alfabeto, estado inicial, estados de aceptaci髇 y transiciones. */
+/* Funci贸n para cargar un aut贸mata vac铆o. 
+Permite ingresar los estados, alfabeto, estado inicial, estados de aceptaci贸n y transiciones. */
 TAutomata CargaAutomata() {
 	TAutomata nvo;
+	int a,b;
 	
 	// Cargar los estados
 	printf("\nEstados");
@@ -132,9 +133,13 @@ TAutomata CargaAutomata() {
 	printf("\nAlfabeto");
 	nvo.Alfabeto = create_set();
 	
-	// Cargar los estados de aceptaci髇
+	// Cargar los estados de aceptaci n
 	printf("\nEstados de aceptacion: ");
 	nvo.Estados_Aceptacion = create_set();
+	if(Cantidad_Elementos(nvo.Estados_Aceptacion>1)){
+		printf("\n error mas de un estado de aceptacion igrese un automata con no mas de un estado");
+		nvo=CargaAutomata();
+	}
 	
 	// Cargar el estado inicial
 	printf("\nEstado Inicial:");
@@ -143,11 +148,22 @@ TAutomata CargaAutomata() {
 	// Cargar las transiciones
 	printf("\nTransiciones: ");
 	nvo.Transiciones = CargaListaTransiciones(nvo.Estados, nvo.Alfabeto);
-	
-	return nvo;  // Retornar el aut髆ata cargado
+
+	a=validar_transiciones(nvo.Estados,nvo.Transiciones);
+	if(a!=0){
+		printf("\n ERROR INGRESE AUTOMATA VALIDO");
+		return CargaAutomata();
+	}
+	b=validar_etiquetas(nvo.Estados,nvo.Alfabeto);
+	if(b!=0){
+		printf("\n ERROR INGRESE UN AUTOMATA VALIDO");
+		return CargaAutomata();
+	}
+	return nvo;  // Retornar el aut mata cargado
+}
 }
 
-/* Funci髇 para mostrar el aut髆ata cargado, mostrando todos sus componentes. */
+/* Funci贸n para mostrar el aut贸mata cargado, mostrando todos sus componentes. */
 void MostrarAutomata(TAutomata a) {
 	printf("\n=============================\n");
 	printf("AUTOMATA CARGADO\n");
@@ -165,7 +181,7 @@ void MostrarAutomata(TAutomata a) {
 	printf("\nq0 (Estado inicial): ");
 	show_set(a.Estado_Inicial);
 	
-	// Mostrar los estados de aceptaci髇
+	// Mostrar los estados de aceptaci贸n
 	printf("\nF (Estados de aceptacion): ");
 	show_set(a.Estados_Aceptacion);
 	
@@ -176,7 +192,7 @@ void MostrarAutomata(TAutomata a) {
 	printf("=============================\n");
 }
 
-/* Funci髇 para verificar si una cadena pertenece a la lista. */
+/* Funci贸n para verificar si una cadena pertenece a la lista. */
 int pertenece_a_lista(LIST l, STR objetivo) {
 	while (l != NULL) {
 		if (string_equal(l->date, objetivo)) {
@@ -187,20 +203,20 @@ int pertenece_a_lista(LIST l, STR objetivo) {
 	return 0;  // La cadena no pertenece a la lista
 }
 
-/* Funci髇 para leer una cadena y verificar si es aceptada por el aut髆ata. */
+/* Funci贸n para leer una cadena y verificar si es aceptada por el aut贸mata. */
 int LeerCadena(STR Cadena, TAutomata A) {
 	STR aux;
 	SET state, rta = NULL;
 	aux = Cadena;
 	state = A.Estado_Inicial;
 	
-	// Recorrer la cadena y hacer las transiciones en el aut髆ata
+	// Recorrer la cadena y hacer las transiciones en el aut贸mata
 	while (aux != NULL) {
 		state = transicion(state, A.Transiciones, aux->date);
 		aux = aux->next;
 	}
 	
-	// Verificar si el aut髆ata termina en un estado de aceptaci髇
+	// Verificar si el aut贸mata termina en un estado de aceptaci贸n
 	rta = intersection_set(A.Estados_Aceptacion, state);
 	show_set(rta);
 	
