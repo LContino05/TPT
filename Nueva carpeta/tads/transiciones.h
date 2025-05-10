@@ -23,5 +23,7 @@ Transiciones CreaNodoTransicion();
 Transiciones CargaListaTransiciones();
 void mostrar_lista_transiciones(Transiciones t);
 SET transicion(SET a,Transiciones b,char c);
+int validar_transiciones(SET, Transiciones);
+int validar_etiquetas(SET, Transiciones);
 
 #endif
