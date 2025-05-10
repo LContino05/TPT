@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Función para agregar un nuevo nodo de transición a la lista de transiciones */
+/* FunciÃ³n para agregar un nuevo nodo de transiciÃ³n a la lista de transiciones */
 void CargaLista(Transiciones *head, Transiciones new_node) {
 	Transiciones temp;
-	// Si la lista está vacía, el nuevo nodo se convierte en el primer elemento
+	// Si la lista estÃ¡ vacÃ­a, el nuevo nodo se convierte en el primer elemento
 	if(*head == NULL) 
 		*head = new_node;
 	else {
-		// Si la lista no está vacía, recorremos hasta el último nodo
+		// Si la lista no estÃ¡ vacÃ­a, recorremos hasta el Ãºltimo nodo
 		temp = *head;
 		while(temp->sig != NULL) 
 			temp = temp->sig;
@@ -20,48 +20,50 @@ void CargaLista(Transiciones *head, Transiciones new_node) {
 	}
 }
 
-/* Función para crear un nuevo nodo de transición */
+/* FunciÃ³n para crear un nuevo nodo de transiciÃ³n */
 Transiciones CreaNodoTransicion() {
 	Transiciones Nodo;
 	// Asignamos memoria para el nodo
 	Nodo = (Transiciones)malloc(sizeof(Delta));
-	// Inicializamos el siguiente puntero como NULL, ya que es el último nodo de la lista
+	// Inicializamos el siguiente puntero como NULL, ya que es el Ãºltimo nodo de la lista
 	Nodo->sig = NULL;
 	return Nodo;
 }
 
-/* Función para cargar las transiciones del autómata desde la entrada del usuario */
+/* FunciÃ³n para cargar las transiciones del autÃ³mata desde la entrada del usuario */
 Transiciones CargaListaTransiciones(LIST Estados, LIST alfabeto) {
 	Transiciones nvo = NULL, nodo = NULL;
-	int opc;
+	int opc; char C;
 	// Preguntamos si se quiere cargar transiciones
 	printf("\nCargar transiciones? 1:si 2:no :");
 	scanf("%d", &opc);
 	
 	// Continuamos cargando transiciones mientras el usuario lo indique
 	while(opc != 2) {
-		// Creamos un nuevo nodo de transición
+		// Creamos un nuevo nodo de transiciÃ³n
 		nodo = CreaNodoTransicion();
 		fflush(stdin); // Limpiamos el buffer de entrada
 		
 		// Leemos el estado de origen
 		printf("\nEstado de origen: ");
-		nodo->dato.Estado_Origen = load(); // Función load() debe devolver un conjunto de estados
+		nodo->dato.Estado_Origen = load(); // FunciÃ³n load() debe devolver un conjunto de estados
 		
 		fflush(stdin); // Limpiamos el buffer de entrada
 		
-		// Leemos la etiqueta de la transición
-		printf("\nEtiqueta: ");
-		scanf("%c", &nodo->dato.Etiqueta); // Leemos un carácter
-		
+		// Leemos la etiqueta de la transiciÃ³n
+		do{
+			printf("\nEtiqueta: ");
+			scanf("%c", &C);
+		}while(get_char(alfabeto->date)==C); // Leemos un carÃ¡cter
+		nodo->dato.Etiqueta = C;
 		fflush(stdin); // Limpiamos el buffer de entrada
 		
 		// Leemos el estado de destino
 		printf("\nEstado destino: ");
 		nodo->dato.Estado_Destino = create_set(); // Creamos un nuevo conjunto de estados
-		CargaLista(&nvo, nodo); // Añadimos la transición a la lista
+		CargaLista(&nvo, nodo); // AÃ±adimos la transiciÃ³n a la lista
 		
-		// Preguntamos si se quiere agregar otra transición
+		// Preguntamos si se quiere agregar otra transiciÃ³n
 		printf("\nCargar transiciones? 1:si 2:no :");
 		scanf("%d", &opc);
 	}
@@ -69,14 +71,14 @@ Transiciones CargaListaTransiciones(LIST Estados, LIST alfabeto) {
 	return nvo; // Devolvemos la lista de transiciones cargadas
 }
 
-/* Función para mostrar todas las transiciones del autómata */
+/* FunciÃ³n para mostrar todas las transiciones del autÃ³mata */
 void mostrar_lista_transiciones(Transiciones t) {
 	// Recorremos toda la lista de transiciones
 	while (t != NULL) {
 		printf("d(");
 		print(t->dato.Estado_Origen); // Mostramos el estado de origen
 		printf(", ");
-		printf("%c", t->dato.Etiqueta); // Mostramos la etiqueta de la transición
+		printf("%c", t->dato.Etiqueta); // Mostramos la etiqueta de la transiciÃ³n
 		printf(") = ");
 		show_set(t->dato.Estado_Destino); // Mostramos el estado de destino
 		printf("\n");
@@ -85,7 +87,7 @@ void mostrar_lista_transiciones(Transiciones t) {
 	}
 }
 
-/* Función para realizar una transición en el autómata dada una entrada (carácter) */
+/* FunciÃ³n para realizar una transiciÃ³n en el autÃ³mata dada una entrada (carÃ¡cter) */
 SET transicion(SET a, Transiciones b, char c) {
 	SET ab = NULL;  // Variable para almacenar los resultados de las transiciones
 	SET aux;
@@ -98,14 +100,14 @@ SET transicion(SET a, Transiciones b, char c) {
 		while (aux != NULL) {
 			// Si el estado de origen coincide con el estado actual y la etiqueta coincide con la entrada
 			if (string_equal(aux->date, b->dato.Estado_Origen) && c == b->dato.Etiqueta) {
-				// Realizamos la transición añadiendo los estados de destino al conjunto resultante
+				// Realizamos la transiciÃ³n aÃ±adiendo los estados de destino al conjunto resultante
 				ab = union_set(ab, clone_set(b->dato.Estado_Destino));
 			}
 			aux = aux->next; // Avanzamos al siguiente estado
 		}
 		
-		b = b->sig; // Avanzamos al siguiente nodo de transición
+		b = b->sig; // Avanzamos al siguiente nodo de transiciÃ³n
 	}
 	
-	return ab; // Devolvemos el conjunto de estados resultante después de las transiciones
+	return ab; // Devolvemos el conjunto de estados resultante despuÃ©s de las transiciones
 }
