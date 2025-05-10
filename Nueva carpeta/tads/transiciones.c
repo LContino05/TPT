@@ -111,3 +111,43 @@ SET transicion(SET a, Transiciones b, char c) {
 	
 	return ab; // Devolvemos el conjunto de estados resultante después de las transiciones
 }
+
+int validar_transiciones(SET Q,Transiciones lista){
+	int b;
+	Transiciones aux;
+	aux=lista;
+	b=0;
+	while(aux!=NULL){/revisa toda la lista/
+		if(!is_element_in_set(Q,aux->dato.Estado_Origen)){/* verifica que el estado de origen este en Q */
+			printf("\n ERROR");
+			print(aux->dato.Estado_Origen);/lo muesta si no esta/
+			printf("\n NO PERTENECE A Q");
+			b=1;
+		}
+		if(!is_sub_set(aux->dato.Estado_Destino,Q)){/verifica que el estado destino este en Q/
+			printf("\n ERROR");
+			print(aux->dato.Estado_Destino);/lo muesta si no esta/
+			printf("\ NO PERTENECE A Q");
+			b=1;
+		}
+		aux=aux->sig;
+	}
+	return b;
+}
+
+int validar_etiquetas(SET alf,Transiciones lista){
+	Transiciones aux;
+	int b;
+	STR sim;
+	aux=lista;
+	b=0;
+	while (aux!=NULL){
+		sim=create_node(aux->dato.Etiqueta);
+		if(!is_element_in_set(alf,sim)){
+			printf("\n ERROR LA ETIQUTA NO PERTENECE AL ALFABETO");
+			b=1;
+		}
+		aux=aux->sig;
+	}
+	return b;
+}
